@@ -81,7 +81,7 @@ def init():
     dcreation_date = datetime.utcfromtimestamp(creation_date).strftime('%Y-%m-%d %H:%M:%S')
     # 86400: the number of seconds in a day
     if todays_date - creation_date > 86400:
-        print("Rates last updated: {dcreation_date}")
+        print(f"Rates last updated: {dcreation_date}")
         print("Updating exchange rates.")
         get_fx_rates()
         save_csv_rates()
