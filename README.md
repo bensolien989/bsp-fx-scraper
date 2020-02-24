@@ -10,8 +10,17 @@ The information provided by this script is freely available on the BSP Website (
 [BSP Exchange Rate calculator](http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx)
 
 Exchange rates change daily, and so this script scrapes updated fx rates from the BSP website to do calculations.
-
 Props to BSP for the fx rates.
+
+Usage:
+``` pyhton
+python bsp_fx_scraper.py usd 2999
+```
+To get the country codes:
+``` python
+python bsp_fx_scraper.py codes
+```
+
 
 Please read the following terms and conditions carefully before using this script.
 1. If you use this script, I (Bernard Solien) am not to be held liable for any damage caused from the use or misuse of this script.
