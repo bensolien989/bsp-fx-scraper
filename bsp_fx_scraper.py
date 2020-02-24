@@ -8,10 +8,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 url = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx"
-data = {}
-country_code = {}
-csv_file = "./bsp_rates.csv"
-csv_codes = "./cc.csv"
+data, country_code, csv_file, csv_codes = {}, {}, "./bsp_rates.csv", "./cc.csv"
 
 
 def get_fx_rates():
@@ -127,15 +124,15 @@ def valid_c_code(code):
 usage = f'''
 USAGE:
 ======\n
-    {sys.argv[0]} <country code> <ammount in foreign currency>
+    python {sys.argv[0]} <country code> <ammount in foreign currency>
 
     eg:
-    {sys.argv[0]} usd 1999.19
+    python {sys.argv[0]} usd 1999.19
 
 NOTE:
-=====
+=====\n
     To get valid country codes, just type:
-    {sys.argv[0]} codes
+    python {sys.argv[0]} codes
 '''
 
 if __name__ == '__main__':
@@ -144,6 +141,9 @@ if __name__ == '__main__':
         if sys.argv[1] == 'codes':
             show_codes()
             exit(0)
+        else:
+            print("\n** Need Help **")
+            print(usage)
     elif length == 3:
         country = sys.argv[1]
         pgk = sys.argv[2]
