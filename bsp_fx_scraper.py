@@ -124,15 +124,15 @@ def valid_c_code(code):
 usage = f'''
 USAGE:
 ======\n
-    python {sys.argv[0]} <country code> <ammount in foreign currency>
+    > python {sys.argv[0]} <country code> <ammount in foreign currency>
 
     eg:
-    python {sys.argv[0]} usd 1999.19
+    > python {sys.argv[0]} usd 1999.19
 
 NOTE:
 =====\n
-    To get valid country codes, just type:
-    python {sys.argv[0]} codes
+    > To get valid country codes, just type:
+    > python {sys.argv[0]} codes
 '''
 
 if __name__ == '__main__':
