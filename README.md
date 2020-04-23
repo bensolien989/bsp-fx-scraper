@@ -15,11 +15,11 @@ Props to BSP for the fx rates.
 
 ## Usage:
 ``` pyhton
-python bsp_fx_scraper.py usd 2999
+python3 bsp_fx_scraper.py usd 2999
 ```
 To get the country codes:
 ``` python
-python bsp_fx_scraper.py codes
+python3 bsp_fx_scraper.py codes
 ```
 
 ## Notice:
