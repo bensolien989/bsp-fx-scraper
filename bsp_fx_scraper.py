@@ -48,21 +48,21 @@ def save_csv_country_codes():
         fields = ['code', 'country']
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
-        for i, code in enumerate(country_code):
+        for _, code in enumerate(country_code):
             w.writerow({'code': code, 'country': country_code[code]})
 
 
 def read_csv_rate():
     with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
-        for i, rate in enumerate(reader):
+        for _, rate in enumerate(reader):
             data[rate['country']] = float(rate['rate'])
 
 
 def read_csv_country_codes():
     with open(csv_codes, "r") as f:
         reader = csv.DictReader(f)
-        for i, code in enumerate(reader):
+        for _, code in enumerate(reader):
             country_code[code['code']] = code['country']
 
 
