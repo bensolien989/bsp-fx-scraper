@@ -20,7 +20,7 @@ def get_fx_rates():
     print('Updating csv data-stores...')
 
     soup = BeautifulSoup(r.text, 'lxml')
-    table = soup.find('table', attrs={'id': 'exchange_rates'}).find('tbody')
+    table = soup.find('table', attrs={'class': 'table-striped'}).find('tbody')
     tbody = table.find_all('tr')
 
     for i, rate in enumerate(tbody):
