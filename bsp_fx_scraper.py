@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
-import requests
 import csv
 import os
 import time
 import sys
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+try:
+  import requests
+except:
+  print("maybe 'pip install requests bs4' first") 
+try:
+  from bs4 import BeautifulSoup
+except:
+  print("do a 'pip install bs4' then try again")
+
 
 url = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx"
 data, country_code, csv_file, csv_codes = {}, {}, "./.bsp_rates.csv", "./.cc.csv"
 
 
 def get_fx_rates():
-    global url, data
+    #global url, data
 
     r = requests.get(url, timeout=15)
     if not r.status_code == 200:
