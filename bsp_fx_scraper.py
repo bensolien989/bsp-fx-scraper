@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 url = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx"
-data, country_code, csv_file, csv_codes = {}, {}, "./bsp_rates.csv", "./cc.csv"
+data, country_code, csv_file, csv_codes = {}, {}, "./.bsp_rates.csv", "./.cc.csv"
 
 
 def get_fx_rates():
