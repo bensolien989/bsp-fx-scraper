@@ -156,7 +156,7 @@ if __name__ == '__main__':
             print(usage)
     elif length == 3:
         country = sys.argv[1]
-        pgk = sys.argv[2]
+        pgk = sys.argv[2].replace(',','')
         init()
         convert(country, pgk)
         exit(0)
