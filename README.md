@@ -4,6 +4,11 @@ BSP Exchange Rate calculator Scraper.
 Modules you'll need to pip install:
 1. requests
 2. bs4
+3. lxml
+
+```bash
+sudo pip install requests bs4 lxml
+```
 
 ## Fair use:
 The information provided by this script is freely available on the BSP Website (link provided below).
