@@ -4,34 +4,36 @@ import os
 import time
 import sys
 from datetime import datetime
+from sys import platform
 
-try:
-  import requests
-except:
-  print("maybe 'pip install requests bs4' first") 
 try:
   from bs4 import BeautifulSoup
+  import requests
 except:
-  print("do a 'pip install bs4' then try again")
+  sys.exit(script + "maybe 'pip install requests bs4' first, then do a 'pip install bs4' then try again.")
 
 
-url = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx"
-data, country_code, csv_file, csv_codes = {}, {}, "./.bsp_rates.csv", "./.cc.csv"
+url, home = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx", os.environ['HOME']
+
+if platform == "linux" or platform == "linux2":
+    data, country_code, csv_file, csv_codes = {}, {}, home + "/.bsp_rates.csv", home + "/.cc.csv"
+else: #platform == "win32":
+    data, country_code, csv_file, csv_codes = {}, {}, home + "\.bsp_rates.csv", home + "\.cc.csv"
+
 
 
 def get_fx_rates():
-    #global url, data
-
-    r = requests.get(url, timeout=15)
-    if not r.status_code == 200:
-        raise ConnectionError("Check Internet Connection")
-    print('Updating csv data-stores...')
+    # The main function that saves the rates and codes
+    try:
+        r = requests.get(url, timeout=15)
+    except:
+        sys.exit("Check Internet Connection")
 
     soup = BeautifulSoup(r.text, 'lxml')
     table = soup.find('table', attrs={'class': 'table-striped'}).find('tbody')
     tbody = table.find_all('tr')
 
-    for i, rate in enumerate(tbody):
+    for _, rate in enumerate(tbody):
         rate = rate.text.strip().split('\n')
         ccode, country, value = rate[4], rate[3], rate[5]
         data[ccode] = float(value)
@@ -40,18 +42,16 @@ def get_fx_rates():
 
 def save_csv_rates():
     # Save rates to HD so we dont keep fetching rate from the net
-    print(f"Saving fx rates to: {csv_file}")
     with open(csv_file, "w", newline="\n") as f:
         fields = ['country', 'rate']
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
-        for i, country in enumerate(data):
+        for _, country in enumerate(data):
             w.writerow({'country': country.lower(), 'rate': data[country]})
 
 
 def save_csv_country_codes():
     # Save country codes
-    print(f"Saving Country Codes to {csv_codes}")
     with open(csv_codes, "w", newline="\n") as f:
         fields = ['code', 'country']
         w = csv.DictWriter(f, fieldnames=fields)
@@ -83,12 +83,10 @@ def init():
 
     todays_date = time.time()
     creation_date = os.path.getctime(csv_file)
-    dcreation_date = datetime.utcfromtimestamp(
-        creation_date).strftime('%Y-%m-%d %H:%M:%S')
+    dcreation_date = datetime.utcfromtimestamp(creation_date).strftime('%Y-%m-%d %H:%M:%S')
     # 86400: the number of seconds in a day
     if todays_date - creation_date > 86400:
         print(f"Rates last updated: {dcreation_date}")
-        print("Updating exchange rates.")
         get_fx_rates()
         save_csv_rates()
     read_csv_rate()
@@ -96,16 +94,13 @@ def init():
 
 def convert(c_code, amt):
     if not valid_c_code(c_code):
-        print("\n** Invalid Country Code! **\n")
         print(usage)
-        exit(1)
-    print(
-        f"Converting {amt} ({c_code}) {country_code[c_code].capitalize()} to PNG Kina (PGK)")
-    for i, cc in enumerate(data):
+        sys.exit(script + "** Invalid Country Code! **\n")
+    print(f"Converting {amt} ({c_code.upper()}) {country_code[c_code].upper()} to PNG Kina (PGK)")
+    for _, cc in enumerate(data):
         if c_code == cc:
-            print(f"Rate for {cc.capitalize()} is {data[cc]}")
-            print("The converted ammount is: K{:.2f}".format(
-                float(amt) / data[cc]))
+            print(f"Rate for {cc.upper()} is {data[cc]}")
+            print("The converted ammount is: K{:.2f}".format(float(amt) / data[cc]))
 
 
 def show_codes():
@@ -157,9 +152,9 @@ if __name__ == '__main__':
     elif length == 3:
         country = sys.argv[1]
         pgk = sys.argv[2].replace(',','')
+        pgk = float(pgk)
         init()
         convert(country, pgk)
         exit(0)
     else:
-        print("Not enough info to perform exchange calculation")
         print(usage)
