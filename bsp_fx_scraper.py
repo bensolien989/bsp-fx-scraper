@@ -96,11 +96,11 @@ def convert(c_code, amt):
     if not valid_c_code(c_code):
         print(usage)
         sys.exit(script + "** Invalid Country Code! **\n")
-    print(f"Converting {amt} ({c_code.upper()}) {country_code[c_code].upper()} to PNG Kina (PGK)")
+    print(f"{amt} {c_code.upper()} to PGK")
     for _, cc in enumerate(data):
         if c_code == cc:
-            print(f"Rate for {cc.upper()} is {data[cc]}")
-            print("The converted ammount is: K{:.2f}".format(float(amt) / data[cc]))
+            print(f"Rate today: {data[cc]}")
+            print("Ammount is: K{:.2f}".format(float(amt) / data[cc]))
 
 
 def show_codes():
