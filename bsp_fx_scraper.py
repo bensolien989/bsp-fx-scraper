@@ -99,7 +99,7 @@ def convert(c_code, amt):
     for _, cc in enumerate(data):
         if c_code == cc:
             print(f"Rate today: {data[cc]}")
-            print("Ammount is: K{:.2f}".format(float(amt) / data[cc]))
+            print("Converted: K{:.2f}".format(float(amt) / data[cc]))
 
 
 def show_codes():
