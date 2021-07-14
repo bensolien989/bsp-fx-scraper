@@ -10,17 +10,16 @@ try:
   from bs4 import BeautifulSoup
   import requests
 except:
-  sys.exit(script + "maybe 'pip install requests bs4' first, then do a 'pip install bs4' then try again.")
+  sys.exit(sys.argv[0] + "maybe 'pip install requests bs4' first, then do a 'pip install bs4' then try again.")
 
-
-url, home = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx", os.environ['HOME']
+url = "http://www.bsp.com.pg/International/Exchange-Rates/Exchange-Rates.aspx"
 
 if platform == "linux" or platform == "linux2":
+    home = os.environ['HOME']
     data, country_code, csv_file, csv_codes = {}, {}, home + "/.bsp_rates.csv", home + "/.cc.csv"
 else: #platform == "win32":
+    home = os.environ['USERPROFILE']
     data, country_code, csv_file, csv_codes = {}, {}, home + "\.bsp_rates.csv", home + "\.cc.csv"
-
-
 
 def get_fx_rates():
     # The main function that saves the rates and codes
@@ -95,7 +94,7 @@ def init():
 def convert(c_code, amt):
     if not valid_c_code(c_code):
         print(usage)
-        sys.exit(script + "** Invalid Country Code! **\n")
+        sys.exit(sys.argv[0] + "** Invalid Country Code! **\n")
     print(f"{amt} {c_code.upper()} to PGK")
     for _, cc in enumerate(data):
         if c_code == cc:
