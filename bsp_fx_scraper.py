@@ -81,11 +81,11 @@ def init():
         save_csv_country_codes()
 
     todays_date = time.time()
-    creation_date = os.path.getctime(csv_file)
+    creation_date = os.path.getmtime(csv_file)
     dcreation_date = datetime.utcfromtimestamp(creation_date).strftime('%Y-%m-%d %H:%M:%S')
     # 86400: the number of seconds in a day
     if todays_date - creation_date > 86400:
-        print(f"Rates last updated: {dcreation_date}")
+        print(f"Rates last updated: {dcreation_date}... Updating...")
         get_fx_rates()
         save_csv_rates()
     read_csv_rate()
@@ -93,8 +93,7 @@ def init():
 
 def convert(c_code, amt):
     if not valid_c_code(c_code):
-        print(usage)
-        sys.exit(sys.argv[0] + "** Invalid Country Code! **\n")
+        sys.exit(f"\n\n** Invalid Country Code! **\n{usage}")
     print(f"{amt} {c_code.upper()} to PGK")
     for _, cc in enumerate(data):
         if c_code == cc:
